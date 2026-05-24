@@ -89,7 +89,7 @@ class ZeroTouchLauncher(QMainWindow):
         main_layout.addWidget(self.mode_box)
 
         # Debug Toggle
-        self.debug_check = QCheckBox("Enable Debug Mode (Show Camera)")
+        self.debug_check = QCheckBox("Enable Debug Mode (Future Debugging Needs)")
         self.debug_check.setChecked(True)
         self.debug_check.setStyleSheet("""
             QCheckBox { color: rgba(255, 255, 255, 200); font-size: 13px; background: transparent; }
