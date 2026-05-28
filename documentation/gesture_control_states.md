@@ -23,8 +23,8 @@ When the state is **ACTIVE**, the following gestures are mapped to Windows OS ac
 - **Behavior**: Performs a "one-shot" click. To click again, the user must briefly change gestures or move the hand.
 
 ### Fist
-- **Action**: Mouse Down + Mouse Movement (Drag).
-- **Behavior**: Simulates holding the left mouse button down. Moving the hand while in a fist allows for dragging windows or items.
+- **Action**: Mouse Down + Relative Mouse Movement (Drag).
+- **Behavior**: Simulates holding the left mouse button down. Uses raw relative mouse motion (`MOUSEEVENTF_MOVE` via `ctypes`) to compute delta distances. This ensures seamless panning in applications like photo viewers and 3D space that ignore absolute cursor positions.
 
 ### Pinch
 - **Action**: None (Detected).
