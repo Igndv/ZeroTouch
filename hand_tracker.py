@@ -9,6 +9,7 @@ import pyautogui
 from collections import deque
 import sys
 import os
+import ctypes
 
 def get_asset_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -149,6 +150,10 @@ class HandTracker:
         
         raw_x = np.interp(w, [0.2, 0.8], [10, self.screen_width - 10])
         raw_y = np.interp(h, [0.2, 0.8], [10, self.screen_height - 10])
+        
+        prev_x = self.smooth_x
+        prev_y = self.smooth_y
+        
         self.smooth_x = self.alpha * raw_x + (1 - self.alpha) * self.smooth_x
         self.smooth_y = self.alpha * raw_y + (1 - self.alpha) * self.smooth_y
 
@@ -166,7 +171,9 @@ class HandTracker:
 
         elif mlp_gesture == "Fist":
             pyautogui.mouseDown()
-            pyautogui.moveTo(self.smooth_x, self.smooth_y)
+            dx = int(self.smooth_x - prev_x)
+            dy = int(self.smooth_y - prev_y)
+            ctypes.windll.user32.mouse_event(0x0001, dx, dy, 0, 0) # MOUSEEVENTF_MOVE
             self.click_active = False
             self.last_pinch_dist = None
 
